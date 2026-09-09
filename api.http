@@ -1,0 +1,8 @@
+### todas as vagas
+GET http://localhost:8080/vagas
+
+### uma que existe
+GET http://localhost:8080/vagas/1
+
+### uma que NÃO existe
+GET http://localhost:8080/vagas/nao-existe
