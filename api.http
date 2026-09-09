@@ -6,3 +6,53 @@ GET http://localhost:8080/vagas/1
 
 ### uma que NÃO existe
 GET http://localhost:8080/vagas/nao-existe
+
+
+### criar uma vaga
+POST http://localhost:8080/vagas
+Content-Type: application/json
+
+{
+  "titulo": "Pessoa Desenvolvedora Java Pleno",
+  "descricao": "Serviços de cobrança em Spring Boot, com fila e observabilidade.",
+  "area": "Back-end",
+  "senioridade": "Pleno",
+  "local": "Remoto",
+  "aceitaIniciante": false,
+  "empresaSlug": "tucano-systems"
+}
+
+
+### trocar uma vaga
+PUT http://localhost:8080/vagas/1
+Content-Type: application/json
+
+{
+  "titulo": "Pessoa Desenvolvedora Front-end Pleno",
+  "descricao": "Telas do produto em React e Next.js.",
+  "area": "Front-end",
+  "senioridade": "Pleno",
+  "local": "Remoto",
+  "aceitaIniciante": false,
+  "empresaSlug": "aurora-tech"
+}
+
+
+### apagar uma vaga
+DELETE http://localhost:8080/vagas/12
+
+
+### buscar por área
+GET http://localhost:8080/vagas/busca?area=Dados
+
+### buscar por área e senioridade
+GET http://localhost:8080/vagas/busca?area=Dados&senioridade=Júnior
+
+### buscar por aceitaIniciante
+GET http://localhost:8080/vagas/busca?aceitaIniciante=true
+
+### buscar sem filtro
+GET http://localhost:8080/vagas/busca
+
+### busca sem resultado
+GET http://localhost:8080/vagas/busca?area=Computação%20Quântica
