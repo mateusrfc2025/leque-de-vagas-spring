@@ -1,5 +1,7 @@
 # Leque de Vagas — a API
 
+# Leque de Vagas — a API
+
 Projeto de referência do curso **Introdução ao Spring Boot** (NickDev). É o
 outro lado do mural de vagas: o programa que guarda as vagas, as empresas e as
 pessoas, e as entrega para quem pedir.
@@ -64,6 +66,17 @@ Tudo no mesmo pacote da `Application` — é o que o `@ComponentScan` embutido n
 `@SpringBootApplication` enxerga. Subpastas por camada também funcionam, desde
 que fiquem dentro dele.
 
+## O que foi aprendido na Frente 1 - Aula 2 - Lucas Ramalho
+
+- Implementação do CRUD completo de vagas (GET, POST, PUT e DELETE).
+- Geração automática de IDs utilizando `UUID`.
+- Uso de `ResponseEntity` para controlar as respostas da API.
+- Tratamento de vagas inexistentes com `404 Not Found`.
+- Retorno de `201 Created` e cabeçalho `Location` na criação de vagas.
+- Retorno de `204 No Content` na exclusão de vagas.
+- Utilização de `Optional` para busca segura por ID.
+
 ## Licença
 
 Material didático do NickDev. Use para estudar, cite quando reaproveitar.
+
