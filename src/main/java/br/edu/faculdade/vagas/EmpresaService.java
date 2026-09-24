@@ -23,7 +23,11 @@ public class EmpresaService {
         return repositorio.porSlug(slug);
     }
 
-    public Empresa criar(Empresa nova) {
+    public EmpresaResposta criar(EmpresaEntrada nova) {
+        if (repositorio.porSlug(nova.slug()).isPresent()) {
+            throw new SlugJaExisteException(nova.slug());
+        }
+
         Empresa comId = new Empresa(
                 UUID.randomUUID().toString(),
                 nova.nome(),
@@ -31,9 +35,13 @@ public class EmpresaService {
                 nova.site(),
                 nova.descricao()
         );
-        return repositorio.salvar(comId);
-    }
 
+        Empresa salva = repositorio.salvar(comId);
+
+        return new EmpresaResposta(
+                salva.id(), salva.nome(), salva.slug(), salva.site(), salva.descricao()
+        );
+    }
     public boolean apagar(String slug) {
         return repositorio.remover(slug);
     }

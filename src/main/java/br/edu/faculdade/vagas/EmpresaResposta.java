@@ -1,0 +1,9 @@
+package br.edu.faculdade.vagas;
+
+public record EmpresaResposta(
+        String id,
+        String nome,
+        String slug,
+        String site,
+        String descricao
+) { }
