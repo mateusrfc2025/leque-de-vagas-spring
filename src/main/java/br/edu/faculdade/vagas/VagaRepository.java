@@ -11,51 +11,39 @@ public class VagaRepository {
 
     private final List<Vaga> vagas = new ArrayList<>(List.of(
             new Vaga("1", "Pessoa Desenvolvedora Front-end Júnior",
-                    "Telas do produto em React e Next.js, pareando com gente mais experiente.",
                     "Front-end", "Júnior", "Remoto", true, "aurora-tech"),
 
             new Vaga("2", "Estágio em Front-end",
-                    "Primeiro contato com HTML, CSS e JavaScript num time de agência.",
                     "Front-end", "Estágio", "Presencial · Olinda", true, "mareh-digital"),
 
             new Vaga("3", "Pessoa Desenvolvedora Front-end Pleno",
-                    "Dono de features inteiras, do desenho à publicação.",
                     "Front-end", "Pleno", "Remoto", false, "nuvem-rosa"),
 
             new Vaga("4", "Pessoa Desenvolvedora React Júnior",
-                    "Interface da plataforma de cursos, com foco em acessibilidade.",
                     "Front-end", "Júnior", "Híbrido · Recife", true, "coral-labs"),
 
             new Vaga("5", "Pessoa Desenvolvedora Java Júnior",
-                    "APIs REST com Spring Boot, integrando transportadoras.",
                     "Back-end", "Júnior", "Remoto", true, "tucano-systems"),
 
             new Vaga("6", "Pessoa Desenvolvedora Back-end Pleno",
-                    "Serviços de agendamento e faturamento, com fila e cache.",
                     "Back-end", "Pleno", "Remoto", false, "aurora-tech"),
 
             new Vaga("7", "Pessoa Desenvolvedora Node Pleno",
-                    "Serviço de trilhas e progresso, em TypeScript.",
                     "Back-end", "Pleno", "Híbrido · Recife", false, "coral-labs"),
 
             new Vaga("8", "Analista de Dados Júnior",
-                    "SQL, planilhas e construção de painéis para clientes do varejo.",
                     "Dados", "Júnior", "Híbrido · Recife", true, "nuvem-rosa"),
 
             new Vaga("9", "Estágio em Dados",
-                    "Limpeza de base e primeiros painéis, com acompanhamento semanal.",
                     "Dados", "Estágio", "Remoto", true, "nuvem-rosa"),
 
             new Vaga("10", "Pessoa Engenheira de Dados Pleno",
-                    "Pipelines de rastreamento de carga, em Python e SQL.",
                     "Dados", "Pleno", "Remoto", false, "tucano-systems"),
 
             new Vaga("11", "Pessoa Desenvolvedora Mobile Júnior",
-                    "Aplicativos em React Native para clientes da agência.",
                     "Mobile", "Júnior", "Remoto", true, "mareh-digital"),
 
             new Vaga("12", "Pessoa Desenvolvedora Android Júnior",
-                    "Aplicativo de agenda para as clínicas parceiras.",
                     "Mobile", "Júnior", "Presencial · Recife", false, "aurora-tech")
     ));
 
@@ -87,4 +75,5 @@ public class VagaRepository {
     public boolean remover(String id) {
         return vagas.removeIf(v -> v.id().equals(id));
     }
+
 }

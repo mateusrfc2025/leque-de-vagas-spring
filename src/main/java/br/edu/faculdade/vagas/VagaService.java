@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+
 @Service
 public class VagaService {
 
@@ -26,16 +27,19 @@ public class VagaService {
     public Vaga criar(Vaga nova) {
         Vaga comId = new Vaga(
                 UUID.randomUUID().toString(),
-                nova.titulo(), nova.descricao(), nova.area(),
+                nova.titulo(), nova.area(),
                 nova.senioridade(), nova.local(),
                 nova.aceitaIniciante(), nova.empresaSlug());
-        return repositorio.salvar(comId);
+
+        repositorio.salvar(comId);
+
+        return new Vaga(comId.id(), comId.titulo(), comId.area(), comId.senioridade(), comId.local(), comId.aceitaIniciante(), comId.empresaSlug());
     }
 
     public Optional<Vaga> trocar(String id, Vaga nova) {
         Vaga comId = new Vaga(
                 id,
-                nova.titulo(), nova.descricao(), nova.area(),
+                nova.titulo(), nova.area(),
                 nova.senioridade(), nova.local(),
                 nova.aceitaIniciante(), nova.empresaSlug());
         return repositorio.trocar(id, comId);
