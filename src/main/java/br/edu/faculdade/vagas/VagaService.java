@@ -37,7 +37,7 @@ public class VagaService {
                 id,
                 nova.titulo(), nova.descricao(), nova.area(),
                 nova.senioridade(), nova.local(),
-                nova.aceitaIniciante(), nova.empresaSlug());
+                Boolean.TRUE.equals(nova.aceitaIniciante()), nova.empresaSlug());
         return repositorio.trocar(id, comId);
     }
 

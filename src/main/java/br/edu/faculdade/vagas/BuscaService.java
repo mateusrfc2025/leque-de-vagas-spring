@@ -13,7 +13,7 @@ public class BuscaService {
         this.repositorio = repositorio;
     }
 
-    public List<Vaga> buscar(String area, String senioridade,
+   public List<Vaga> buscar(String area, String senioridade,
                              Boolean aceitaIniciante) {
 
         return repositorio.todas().stream()
