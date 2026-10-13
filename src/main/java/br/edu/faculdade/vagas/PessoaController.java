@@ -1,5 +1,6 @@
 package br.edu.faculdade.vagas;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,27 +25,27 @@ public class PessoaController {
     }
 
     @GetMapping
-    public List<Pessoa> listar() {
+    public List<PessoaResposta> listar() {
         return servico.listar();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pessoa> porId(@PathVariable String id) {
+    public ResponseEntity<PessoaResposta> porId(@PathVariable String id) {
         return servico.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Pessoa> criar(@RequestBody Pessoa nova) {
-        Pessoa salva = servico.criar(nova);
+    public ResponseEntity<PessoaResposta> criar(@Valid @RequestBody PessoaEntrada nova) {
+        PessoaResposta salva = servico.criar(nova);
         URI onde = URI.create("/pessoas/" + salva.id());
         return ResponseEntity.created(onde).body(salva);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pessoa> trocar(@PathVariable String id,
-                                         @RequestBody Pessoa nova) {
+    public ResponseEntity<PessoaResposta> trocar(@PathVariable String id,
+                                                 @Valid @RequestBody PessoaEntrada nova) {
         return servico.trocar(id, nova)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

@@ -1,8 +1,4 @@
-### Leque de Vagas — Aula 3
-
-### ============================================================
 ### VAGAS
-### ============================================================
 
 ### listar todas as vagas
 GET http://localhost:8080/vagas
@@ -45,9 +41,7 @@ Content-Type: application/json
 DELETE http://localhost:8080/vagas/12
 
 
-### ============================================================
 ### EMPRESAS
-### ============================================================
 
 ### listar todas as empresas
 GET http://localhost:8080/empresas
@@ -65,7 +59,7 @@ Content-Type: application/json
 {
   "nome": "Farol Tech",
   "slug": "farol-tech",
-  "site": "farol.tech",
+  "site": "https://farol.tech",
   "descricao": "Software para portos e terminais."
 }
 
@@ -73,9 +67,7 @@ Content-Type: application/json
 DELETE http://localhost:8080/empresas/farol-tech
 
 
-### ============================================================
 ### PESSOAS
-### ============================================================
 
 ### listar todas as pessoas
 GET http://localhost:8080/pessoas
@@ -112,9 +104,7 @@ Content-Type: application/json
 DELETE http://localhost:8080/pessoas/6
 
 
-### ============================================================
 ### BUSCA DE VAGAS
-### ============================================================
 
 ### buscar por área — deve retornar 200
 GET http://localhost:8080/vagas/busca?area=Dados
@@ -132,9 +122,46 @@ GET http://localhost:8080/vagas/busca
 GET http://localhost:8080/vagas/busca?area=Computação%20Quântica
 
 
-### ============================================================
 ### ESTATÍSTICAS
-### ============================================================
 
 ### consultar estatísticas
 GET http://localhost:8080/estatisticas
+
+
+### PESSOA (chamadas inválidas)
+
+### PESSOA · corpo vazio — deve retornar 400
+POST http://localhost:8080/pessoas
+Content-Type: application/json
+
+{}
+
+### PESSOA · email "maria@" — deve retornar 400
+POST http://localhost:8080/pessoas
+Content-Type: application/json
+
+{ "nome": "Maria", "email": "maria@", "area": "Dados", "senioridade": "Júnior" }
+
+### PESSOA · email "@exemplo.com" — anote o resultado
+POST http://localhost:8080/pessoas
+Content-Type: application/json
+
+{ "nome": "Maria", "email": "@exemplo.com", "area": "Dados", "senioridade": "Júnior" }
+
+### PESSOA · email "maria exemplo.com" — anote o resultado
+POST http://localhost:8080/pessoas
+Content-Type: application/json
+
+{ "nome": "Maria", "email": "maria exemplo.com", "area": "Dados", "senioridade": "Júnior" }
+
+### PESSOA · email "maria@exemplo" (sem ponto) — anote o resultado
+POST http://localhost:8080/pessoas
+Content-Type: application/json
+
+{ "nome": "Maria", "email": "maria@exemplo", "area": "Dados", "senioridade": "Júnior" }
+
+### PESSOA · PUT com corpo vazio — deve retornar 400
+PUT http://localhost:8080/pessoas/1
+Content-Type: application/json
+
+{}
