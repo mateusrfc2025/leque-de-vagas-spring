@@ -32,12 +32,12 @@ O projeto é de equipe, e cada pessoa carrega uma frente o semestre inteiro. Est
 repositório é de referência, então tem as quatro juntas — no da sua equipe, cada
 uma é de alguém, e o `git log` é a evidência disso.
 
-| Aluno           | Frente | Recurso | Arquivos |
-|-----------------| --- | --- | --- |
-| Lucas Ramalho   | 1 | Vaga | `Vaga`, `VagaRepository`, `VagaService`, `VagaController` |
-| Mateus Ramalho  | 2 | Empresa | `Empresa`, `EmpresaRepository`, `EmpresaService`, `EmpresaController` |
-| Italo Formiga   | 3 | Pessoa | `Pessoa`, `PessoaRepository`, `PessoaService`, `PessoaController` |
-| Matheus Moreira | 4 | Busca e números | `EstatisticasService`, `EstatisticasController` — e, na aula 03, `BuscaService` e `BuscaController` |
+| Aluno          | Frente | Recurso | Arquivos |
+|----------------| --- | --- | --- |
+| Lucas Ramalho  | 1 | Vaga | `Vaga`, `VagaRepository`, `VagaService`, `VagaController` |
+| Mateus Ramalho | 2 | Empresa | `Empresa`, `EmpresaRepository`, `EmpresaService`, `EmpresaController` |
+| Mateus Ramalho  | 3 | Pessoa | `Pessoa`, `PessoaRepository`, `PessoaService`, `PessoaController` |
+| Lucas Ramalho  | 4 | Busca e números | `EstatisticasService`, `EstatisticasController` — e, na aula 03, `BuscaService` e `BuscaController` |
 
 ## Estrutura
 
