@@ -6,4 +6,4 @@ public record EmpresaResposta(
         String slug,
         String site,
         String descricao
-) { }
+) { }//guarda a empresa entrada com um id

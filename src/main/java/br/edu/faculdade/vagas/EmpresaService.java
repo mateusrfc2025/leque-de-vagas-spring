@@ -23,12 +23,12 @@ public class EmpresaService {
         return repositorio.porSlug(slug);
     }
 
-    public EmpresaResposta criar(EmpresaEntrada nova) {
+    public EmpresaResposta criar(EmpresaEntrada nova) {//valida se ja tem uma empresa com os mesmos campos criados
         if (repositorio.porSlug(nova.slug()).isPresent()) {
-            throw new SlugJaExisteException(nova.slug());
+            throw new SlugJaExisteException(nova.slug());//devolve um erro caso a empresa a ser criada ja exista
         }
 
-        Empresa comId = new Empresa(
+        Empresa comId = new Empresa(//caso passe pela validacao cria a empresa nova com os campos usados e da um id para ela
                 UUID.randomUUID().toString(),
                 nova.nome(),
                 nova.slug(),
@@ -36,9 +36,9 @@ public class EmpresaService {
                 nova.descricao()
         );
 
-        Empresa salva = repositorio.salvar(comId);
+        Empresa salva = repositorio.salvar(comId);// salva a empresa criada com o id dela
 
-        return new EmpresaResposta(
+        return new EmpresaResposta(//devolve a empresa criada como resposta da entrada
                 salva.id(), salva.nome(), salva.slug(), salva.site(), salva.descricao()
         );
     }

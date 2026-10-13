@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class EmpresaRepository {
+public class EmpresaRepository {//começa com algumas empresas cadastradas em uma lista na memória, que pode ser modificada durante a execução do sistema
 
     private final List<Empresa> empresas = new ArrayList<>(List.of(
             new Empresa("1", "Aurora Tech", "aurora-tech",
@@ -28,7 +28,7 @@ public class EmpresaRepository {
 
     public List<Empresa> todas() {
         return List.copyOf(empresas);
-    }
+    }//retorna lista publica das empresas acima
 
     public Optional<Empresa> porSlug(String slug) {
         return empresas.stream()
