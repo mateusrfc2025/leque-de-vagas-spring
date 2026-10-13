@@ -11,51 +11,51 @@ public class VagaRepository {
 
     private final List<Vaga> vagas = new ArrayList<>(List.of(
             new Vaga("1", "Pessoa Desenvolvedora Front-end Júnior",
-                    "Telas do produto em React e Next.js, pareando com gente mais experiente.",
+                    "Desenvolvimento de interfaces web",
                     "Front-end", "Júnior", "Remoto", true, "aurora-tech"),
 
             new Vaga("2", "Estágio em Front-end",
-                    "Primeiro contato com HTML, CSS e JavaScript num time de agência.",
+                    "Estágio para aprender desenvolvimento front-end",
                     "Front-end", "Estágio", "Presencial · Olinda", true, "mareh-digital"),
 
             new Vaga("3", "Pessoa Desenvolvedora Front-end Pleno",
-                    "Dono de features inteiras, do desenho à publicação.",
+                    "Desenvolvimento de interfaces web com experiência",
                     "Front-end", "Pleno", "Remoto", false, "nuvem-rosa"),
 
             new Vaga("4", "Pessoa Desenvolvedora React Júnior",
-                    "Interface da plataforma de cursos, com foco em acessibilidade.",
+                    "Desenvolvimento de aplicações com React",
                     "Front-end", "Júnior", "Híbrido · Recife", true, "coral-labs"),
 
             new Vaga("5", "Pessoa Desenvolvedora Java Júnior",
-                    "APIs REST com Spring Boot, integrando transportadoras.",
+                    "Desenvolvimento de sistemas utilizando Java",
                     "Back-end", "Júnior", "Remoto", true, "tucano-systems"),
 
             new Vaga("6", "Pessoa Desenvolvedora Back-end Pleno",
-                    "Serviços de agendamento e faturamento, com fila e cache.",
+                    "Desenvolvimento e manutenção de aplicações back-end",
                     "Back-end", "Pleno", "Remoto", false, "aurora-tech"),
 
             new Vaga("7", "Pessoa Desenvolvedora Node Pleno",
-                    "Serviço de trilhas e progresso, em TypeScript.",
+                    "Desenvolvimento de aplicações utilizando Node.js",
                     "Back-end", "Pleno", "Híbrido · Recife", false, "coral-labs"),
 
             new Vaga("8", "Analista de Dados Júnior",
-                    "SQL, planilhas e construção de painéis para clientes do varejo.",
+                    "Análise e interpretação de dados",
                     "Dados", "Júnior", "Híbrido · Recife", true, "nuvem-rosa"),
 
             new Vaga("9", "Estágio em Dados",
-                    "Limpeza de base e primeiros painéis, com acompanhamento semanal.",
+                    "Estágio para aprender análise de dados",
                     "Dados", "Estágio", "Remoto", true, "nuvem-rosa"),
 
             new Vaga("10", "Pessoa Engenheira de Dados Pleno",
-                    "Pipelines de rastreamento de carga, em Python e SQL.",
+                    "Construção e manutenção de pipelines de dados",
                     "Dados", "Pleno", "Remoto", false, "tucano-systems"),
 
             new Vaga("11", "Pessoa Desenvolvedora Mobile Júnior",
-                    "Aplicativos em React Native para clientes da agência.",
+                    "Desenvolvimento de aplicativos para dispositivos móveis",
                     "Mobile", "Júnior", "Remoto", true, "mareh-digital"),
 
             new Vaga("12", "Pessoa Desenvolvedora Android Júnior",
-                    "Aplicativo de agenda para as clínicas parceiras.",
+                    "Desenvolvimento de aplicativos para Android",
                     "Mobile", "Júnior", "Presencial · Recife", false, "aurora-tech")
     ));
 
@@ -65,7 +65,7 @@ public class VagaRepository {
 
     public Optional<Vaga> porId(String id) {
         return vagas.stream()
-                .filter(v -> v.id().equals(id))
+                .filter(vaga -> vaga.id().equals(id))
                 .findFirst();
     }
 
@@ -75,16 +75,17 @@ public class VagaRepository {
     }
 
     public Optional<Vaga> trocar(String id, Vaga nova) {
-        for (int i = 0; i < vagas.size(); i++) {
-            if (vagas.get(i).id().equals(id)) {
-                vagas.set(i, nova);
+        for (int indice = 0; indice < vagas.size(); indice++) {
+            if (vagas.get(indice).id().equals(id)) {
+                vagas.set(indice, nova);
                 return Optional.of(nova);
             }
         }
+
         return Optional.empty();
     }
 
     public boolean remover(String id) {
-        return vagas.removeIf(v -> v.id().equals(id));
+        return vagas.removeIf(vaga -> vaga.id().equals(id));
     }
 }

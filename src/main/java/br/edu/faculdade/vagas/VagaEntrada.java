@@ -5,23 +5,24 @@ import jakarta.validation.constraints.Size;
 
 public record VagaEntrada(
 
-    @NotBlank(message = "O título é obrigatório")
-    @Size(max = 120)
-    String titulo,
+        @NotBlank(message = "O título é obrigatório")
+        @Size(max = 120, message = "O título deve ter no máximo 120 caracteres")
+        String titulo,
 
-    @NotBlank
-    String area,
+        @NotBlank(message = "A área é obrigatória")
+        String area,
 
-    @NotBlank
-    String senioridade,
+        @NotBlank(message = "A senioridade é obrigatória")
+        String senioridade,
 
-    @NotBlank
-    String empresaSlug,
+        @NotBlank(message = "O slug da empresa é obrigatório")
+        String empresaSlug,
 
-    String descricao,
+        String descricao,
 
-    String local,
+        String local,
 
-    boolean aceitaIniciante
+        boolean aceitaIniciante
 
-) {}
+) {
+}

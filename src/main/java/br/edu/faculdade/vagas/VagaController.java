@@ -1,5 +1,6 @@
 package br.edu.faculdade.vagas;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,7 @@ public class VagaController {
     }
 
     @PostMapping
-    public ResponseEntity<Vaga> criar(@RequestBody Vaga nova) {
+    public ResponseEntity<Vaga> criar(@Valid @RequestBody Vaga nova) {
         Vaga salva = servico.criar(nova);
         URI onde = URI.create("/vagas/" + salva.id());
         return ResponseEntity.created(onde).body(salva);

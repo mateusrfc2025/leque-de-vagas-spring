@@ -26,18 +26,32 @@ public class VagaService {
     public Vaga criar(Vaga nova) {
         Vaga comId = new Vaga(
                 UUID.randomUUID().toString(),
-                nova.titulo(), nova.descricao(), nova.area(),
-                nova.senioridade(), nova.local(),
-                nova.aceitaIniciante(), nova.empresaSlug());
-        return repositorio.salvar(comId);
+                nova.titulo(),
+                nova.descricao(),
+                nova.area(),
+                nova.senioridade(),
+                nova.local(),
+                nova.aceitaIniciante(),
+                nova.empresaSlug()
+        );
+
+        repositorio.salvar(comId);
+
+        return comId;
     }
 
     public Optional<Vaga> trocar(String id, Vaga nova) {
         Vaga comId = new Vaga(
                 id,
-                nova.titulo(), nova.descricao(), nova.area(),
-                nova.senioridade(), nova.local(),
-                Boolean.TRUE.equals(nova.aceitaIniciante()), nova.empresaSlug());
+                nova.titulo(),
+                nova.descricao(),
+                nova.area(),
+                nova.senioridade(),
+                nova.local(),
+                nova.aceitaIniciante(),
+                nova.empresaSlug()
+        );
+
         return repositorio.trocar(id, comId);
     }
 

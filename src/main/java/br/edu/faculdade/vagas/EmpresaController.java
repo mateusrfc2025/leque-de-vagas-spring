@@ -1,5 +1,6 @@
 package br.edu.faculdade.vagas;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +36,8 @@ public class EmpresaController {
     }
 
     @PostMapping
-    public ResponseEntity<Empresa> criar(@RequestBody Empresa nova) {
-        Empresa salva = servico.criar(nova);
+    public ResponseEntity<EmpresaResposta> criar(@Valid @RequestBody EmpresaEntrada nova) {
+        EmpresaResposta salva = servico.criar(nova);
         URI onde = URI.create("/empresas/" + salva.slug());
         return ResponseEntity.created(onde).body(salva);
     }
