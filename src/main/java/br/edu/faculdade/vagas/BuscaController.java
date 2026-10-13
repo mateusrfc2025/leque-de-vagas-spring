@@ -23,10 +23,15 @@ public class BuscaController {
     @GetMapping("/busca")
     public List<Vaga> buscar(
             @RequestParam(required = false)
-            @Size(max = 50, message = "o termo de busca é grande demais")
+            @Size(max = 60, message = "a área passa de 60 caracteres")
             String area,
-            @RequestParam(required = false) String senioridade,
-            @RequestParam(required = false) Boolean aceitaIniciante) {
+
+            @RequestParam(required = false)
+            @Size(max = 60, message = "a senioridade passa de 60 caracteres")
+            String senioridade,
+
+            @RequestParam(required = false)
+            Boolean aceitaIniciante) {
 
         return servico.buscar(area, senioridade, aceitaIniciante);
     }
