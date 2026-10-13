@@ -2,6 +2,7 @@ package br.edu.faculdade.vagas;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 
 public record VagaEntrada(
 
@@ -22,7 +23,8 @@ public record VagaEntrada(
 
         String local,
 
-        boolean aceitaIniciante
+        @NotNull(message = "aceitaIniciante é obrigatório (true ou false)")
+        Boolean aceitaIniciante
 
 ) {
 }

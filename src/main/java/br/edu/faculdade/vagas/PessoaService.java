@@ -15,37 +15,37 @@ public class PessoaService {
         this.repositorio = repositorio;
     }
 
-    public List<Pessoa> listar() {
-        return repositorio.todas();
+    public List<PessoaResposta> listar() {
+        return repositorio.todas().stream()
+                .map(this::paraResposta)
+                .toList();
     }
 
-    public Optional<Pessoa> buscarPorId(String id) {
-        return repositorio.porId(id);
+    public Optional<PessoaResposta> buscarPorId(String id) {
+        return repositorio.porId(id).map(this::paraResposta);
     }
 
-    public Pessoa criar(Pessoa nova) {
-        Pessoa comId = new Pessoa(
-                UUID.randomUUID().toString(),
-                nova.nome(),
-                nova.email(),
-                nova.area(),
-                nova.senioridade()
-        );
-        return repositorio.salvar(comId);
+    public PessoaResposta criar(PessoaEntrada nova) {
+        Pessoa salva = repositorio.salvar(paraPessoa(UUID.randomUUID().toString(), nova));
+        return paraResposta(salva);
     }
 
-    public Optional<Pessoa> trocar(String id, Pessoa nova) {
-        Pessoa comId = new Pessoa(
-                id,
-                nova.nome(),
-                nova.email(),
-                nova.area(),
-                nova.senioridade()
-        );
-        return repositorio.trocar(id, comId);
+    public Optional<PessoaResposta> trocar(String id, PessoaEntrada nova) {
+        return repositorio.trocar(id, paraPessoa(id, nova))
+                .map(this::paraResposta);
     }
 
     public boolean apagar(String id) {
         return repositorio.remover(id);
+    }
+
+    // entrada → modelo (o id vem de fora: gerado no POST, da URL no PUT)
+    private Pessoa paraPessoa(String id, PessoaEntrada e) {
+        return new Pessoa(id, e.nome(), e.email(), e.area(), e.senioridade());
+    }
+
+    // modelo → resposta
+    private PessoaResposta paraResposta(Pessoa p) {
+        return new PessoaResposta(p.id(), p.nome(), p.email(), p.area(), p.senioridade());
     }
 }
