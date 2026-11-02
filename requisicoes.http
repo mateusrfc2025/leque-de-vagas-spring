@@ -66,6 +66,15 @@ Content-Type: application/json
 ### apagar uma empresa — deve retornar 204
 DELETE http://localhost:8080/empresas/farol-tech
 
+### Aula 05 · Frente 2 · deve retornar 200 com "id": 1
+GET http://localhost:8080/empresas/aurora-tech
+
+### Aula 05 · Frente 2 · slug repetido, deve retornar 409
+POST http://localhost:8080/empresas
+Content-Type: application/json
+
+{ "nome": "Aurora Tech", "slug": "aurora-tech", "site": "https://aurora.tech", "descricao": "repetida" }
+
 
 ### PESSOAS
 
@@ -102,6 +111,20 @@ Content-Type: application/json
 
 ### apagar uma pessoa — deve retornar 204
 DELETE http://localhost:8080/pessoas/6
+
+### frente 3 · criar — 201, Location: /pessoas/7
+POST http://localhost:8080/pessoas
+Content-Type: application/json
+
+{ "nome": "Helena Costa", "email": "helena@exemplo.com",
+  "area": "Back-end", "senioridade": "Júnior" }
+
+### frente 3 · e-mail repetido — 409
+POST http://localhost:8080/pessoas
+Content-Type: application/json
+
+{ "nome": "Ana Outra", "email": "ana@exemplo.com",
+  "area": "Dados", "senioridade": "Pleno" }
 
 
 ### BUSCA DE VAGAS

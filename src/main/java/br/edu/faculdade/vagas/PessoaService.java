@@ -25,9 +25,10 @@ public class PessoaService {
         return repositorio.porId(id).map(this::paraResposta);
     }
 
-    public PessoaResposta criar(PessoaEntrada nova) {
-        Pessoa salva = repositorio.salvar(paraPessoa(UUID.randomUUID().toString(), nova));
-        return paraResposta(salva);
+    public PessoaResposta criar(PessoaEntrada entrada) {
+        Pessoa nova = new Pessoa(
+                entrada.nome(), entrada.email(), entrada.area(), entrada.senioridade());
+        return paraResposta(repositorio.save(nova));
     }
 
     public Optional<PessoaResposta> trocar(String id, PessoaEntrada nova) {

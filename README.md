@@ -37,7 +37,8 @@ uma é de alguém, e o `git log` é a evidência disso.
 | Lucas Ramalho  | 1 | Vaga | `Vaga`, `VagaRepository`, `VagaService`, `VagaController` |
 | Mateus Ramalho | 2 | Empresa | `Empresa`, `EmpresaRepository`, `EmpresaService`, `EmpresaController` |
 | Mateus Ramalho  | 3 | Pessoa | `Pessoa`, `PessoaRepository`, `PessoaService`, `PessoaController` |
-| Lucas Ramalho  | 4 | Busca e números | `EstatisticasService`, `EstatisticasController` — e, na aula 03, `BuscaService` e `BuscaController` |
+| Lucas Ramalho | 4 | Busca e números | `EstatisticasService`, `EstatisticasController` — e, na aula 03, `BuscaService` e `BuscaController` |
+
 
 ## Estrutura
 
@@ -79,4 +80,3 @@ que fiquem dentro dele.
 ## Licença
 
 Material didático do NickDev. Use para estudar, cite quando reaproveitar.
-

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class EmpresaService {
@@ -16,33 +15,31 @@ public class EmpresaService {
     }
 
     public List<Empresa> listar() {
-        return repositorio.todas();
+        return repositorio.findAll();
     }
 
     public Optional<Empresa> buscarPorSlug(String slug) {
-        return repositorio.porSlug(slug);
+        return repositorio.findBySlug(slug);
     }
 
-    public EmpresaResposta criar(EmpresaEntrada nova) {//valida se ja tem uma empresa com os mesmos campos criados
-        if (repositorio.porSlug(nova.slug()).isPresent()) {
-            throw new SlugJaExisteException(nova.slug());//devolve um erro caso a empresa a ser criada ja exista
+    public EmpresaResposta criar(EmpresaEntrada nova) {
+        if (repositorio.findBySlug(nova.slug()).isPresent()) {
+            throw new SlugJaExisteException(nova.slug());
         }
 
-        Empresa comId = new Empresa(//caso passe pela validacao cria a empresa nova com os campos usados e da um id para ela
-                UUID.randomUUID().toString(),
-                nova.nome(),
-                nova.slug(),
-                nova.site(),
-                nova.descricao()
-        );
+        Empresa salva = repositorio.save(
+                new Empresa(nova.nome(), nova.slug(), nova.site(), nova.descricao()));
 
-        Empresa salva = repositorio.salvar(comId);// salva a empresa criada com o id dela
-
-        return new EmpresaResposta(//devolve a empresa criada como resposta da entrada
-                salva.id(), salva.nome(), salva.slug(), salva.site(), salva.descricao()
-        );
+        return new EmpresaResposta(salva.getId(), salva.getNome(), salva.getSlug(),
+                salva.getSite(), salva.getDescricao());
     }
+
     public boolean apagar(String slug) {
-        return repositorio.remover(slug);
+        return repositorio.findBySlug(slug)
+                .map(empresa -> {
+                    repositorio.delete(empresa);
+                    return true;
+                })
+                .orElse(false);
     }
 }

@@ -16,7 +16,7 @@ public class BuscaService {
    public List<Vaga> buscar(String area, String senioridade,
                              Boolean aceitaIniciante) {
 
-        return repositorio.todas().stream()
+        return repositorio.todas().stream() // trocar para return repositorio.findAll().stream()   // era: repositorio.todas().stream()
                 .filter(v -> area == null
                         || v.area().equalsIgnoreCase(area))
                 .filter(v -> senioridade == null
