@@ -32,12 +32,12 @@ O projeto é de equipe, e cada pessoa carrega uma frente o semestre inteiro. Est
 repositório é de referência, então tem as quatro juntas — no da sua equipe, cada
 uma é de alguém, e o `git log` é a evidência disso.
 
-| Aluno           | Frente | Recurso | Arquivos |
-|-----------------| --- | --- | --- |
-| Lucas Ramalho   | 1 | Vaga | `Vaga`, `VagaRepository`, `VagaService`, `VagaController` |
-| Mateus Ramalho  | 2 | Empresa | `Empresa`, `EmpresaRepository`, `EmpresaService`, `EmpresaController` |
-| Italo Formiga   | 3 | Pessoa | `Pessoa`, `PessoaRepository`, `PessoaService`, `PessoaController` |
-| Matheus Moreira | 4 | Busca e números | `EstatisticasService`, `EstatisticasController` — e, na aula 03, `BuscaService` e `BuscaController` |
+| Aluno          | Frente | Recurso | Arquivos |
+|----------------| --- | --- | --- |
+| Lucas Ramalho  | 1 | Vaga | `Vaga`, `VagaRepository`, `VagaService`, `VagaController` |
+| Mateus Ramalho | 2 | Empresa | `Empresa`, `EmpresaRepository`, `EmpresaService`, `EmpresaController` |
+| Italo Formiga  | 3 | Pessoa | `Pessoa`, `PessoaRepository`, `PessoaService`, `PessoaController` |
+| Mateus Ramalho | 4 | Busca e números | `EstatisticasService`, `EstatisticasController` — e, na aula 03, `BuscaService` e `BuscaController` |
 
 ## Estrutura
 
@@ -80,3 +80,15 @@ que fiquem dentro dele.
 
 Material didático do NickDev. Use para estudar, cite quando reaproveitar.
 
+## Frente 4 · medição de SQL (aula 05)
+
+| Rota | Comandos SQL | Tem `where`? |
+|---|---|---|
+| GET /vagas/busca?area=Dados | 1 (`select` de todas as vagas) | Não |
+| GET /estatisticas | 1 (`select` de todas as vagas) | Não |
+| GET /vagas/1 | 1 (`select` por id) | Sim, `where id=?` |
+| DELETE /vagas/12 | 3 (`select` do `existsById`, `select` do `deleteById` e o `delete`) | Sim, todos pelo id |
+
+`/vagas/busca?area=Dados` traz 12 linhas do banco para devolver 3 porque o banco devolve todas as vagas (`findAll` não tem `where`). Quem filtra por área é o Java, com `stream`, depois que as 12 já foram lidas.
+
+Em `/estatisticas`, quem conta também é o Java, não o banco. No `DELETE`, o `deleteById` primeiro carrega a vaga com um `select` e só depois apaga.

@@ -23,7 +23,7 @@ public class EstatisticasService {
     // equipe quiser mais números, troque por new LinkedHashMap<>() — e de
     // quebra a ordem das chaves passa a ser a que você escreveu.
     public Map<String, Object> resumo() {
-        List<Vaga> todas = vagas.todas();
+        List<Vaga> todas = vagas.todas(); // trocar para List<Vaga> todas = vagas.findAll();   // era: vagas.todas()
         return Map.of(
             "totalDeVagas", todas.size(),
             "aceitamIniciante", todas.stream()
