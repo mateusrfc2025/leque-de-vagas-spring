@@ -112,6 +112,20 @@ Content-Type: application/json
 ### apagar uma pessoa — deve retornar 204
 DELETE http://localhost:8080/pessoas/6
 
+### frente 3 · criar — 201, Location: /pessoas/7
+POST http://localhost:8080/pessoas
+Content-Type: application/json
+
+{ "nome": "Helena Costa", "email": "helena@exemplo.com",
+  "area": "Back-end", "senioridade": "Júnior" }
+
+### frente 3 · e-mail repetido — 409
+POST http://localhost:8080/pessoas
+Content-Type: application/json
+
+{ "nome": "Ana Outra", "email": "ana@exemplo.com",
+  "area": "Dados", "senioridade": "Pleno" }
+
 
 ### BUSCA DE VAGAS
 

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.springframework.dao.DataIntegrityViolationException;
+
 @RestControllerAdvice
 public class TratadorDeErros {
 
@@ -54,6 +56,14 @@ public class TratadorDeErros {
         ProblemDetail p = ProblemDetail.forStatusAndDetail(status, detalhe);
         p.setTitle(titulo);
         p.setProperty("campos", campos);
+        return p;
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ProblemDetail conflitoNoBanco(DataIntegrityViolationException e) {
+        ProblemDetail p = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT,
+                "O dado conflita com um que já está gravado.");
+        p.setTitle("Conflito");
         return p;
     }
 }
