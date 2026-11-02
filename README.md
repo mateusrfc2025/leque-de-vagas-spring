@@ -39,6 +39,7 @@ uma é de alguém, e o `git log` é a evidência disso.
 | Mateus Ramalho  | 3 | Pessoa | `Pessoa`, `PessoaRepository`, `PessoaService`, `PessoaController` |
 | Lucas Ramalho | 4 | Busca e números | `EstatisticasService`, `EstatisticasController` — e, na aula 03, `BuscaService` e `BuscaController` |
 
+
 ## Estrutura
 
 ```
