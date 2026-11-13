@@ -97,3 +97,19 @@ O INSERT recusado já tinha pedido um id ao banco antes de falhar, e id pedido n
 `/vagas/busca?area=Dados` traz 12 linhas do banco para devolver 3 porque o banco devolve todas as vagas (`findAll` não tem `where`). Quem filtra por área é o Java, com `stream`, depois que as 12 já foram lidas.
 
 Em `/estatisticas`, quem conta também é o Java, não o banco. No `DELETE`, o `deleteById` primeiro carrega a vaga com um `select` e só depois apaga.
+
+## O banco
+
+1. Crie um projeto em supabase.com/dashboard (região São Paulo) e guarde a senha do banco.
+2. No projeto, clique em **Connect** → **Session pooler** e anote host, port, database e user.
+3. Copie o `.env.example` para `.env` (na raiz, ao lado do `pom.xml`) e preencha
+   com os seus dados. O `.env` não vai para o GitHub.
+4. Usamos `ddl-auto=update`: ele cria as tabelas e colunas que faltam e nunca apaga dados,
+   então o que foi gravado sobrevive ao reinício.
+
+### Medição do SQL da busca (aula 05)
+
+| Chamada                   | Selects | Com where? | Vieram do banco | Voltaram  |
+| ------------------------- | ------- | ---------- | --------------- | --------- |
+| `/vagas/busca?area=Dados` | 1       | não        | 12              | 3         |
+| `/estatisticas`           | 1       | não        | 12              | 4 números |

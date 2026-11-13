@@ -25,34 +25,34 @@ public class VagaController {
     }
 
     @GetMapping
-    public List<Vaga> listar() {
+    public List<VagaResposta> listar() {
         return servico.listar();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Vaga> porId(@PathVariable String id) {
+    public ResponseEntity<VagaResposta> porId(@PathVariable Long id) {
         return servico.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Vaga> criar(@Valid @RequestBody Vaga nova) {
-        Vaga salva = servico.criar(nova);
+    public ResponseEntity<VagaResposta> criar(@Valid @RequestBody VagaEntrada entrada) {
+        VagaResposta salva = servico.criar(entrada);
         URI onde = URI.create("/vagas/" + salva.id());
         return ResponseEntity.created(onde).body(salva);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Vaga> trocar(@PathVariable String id,
-                                       @RequestBody Vaga nova) {
+    public ResponseEntity<VagaResposta> trocar(@PathVariable Long id,
+                                               @Valid @RequestBody VagaEntrada nova) {
         return servico.trocar(id, nova)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> apagar(@PathVariable String id) {
+    public ResponseEntity<Void> apagar(@PathVariable Long id) {
         return servico.apagar(id)
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.notFound().build();

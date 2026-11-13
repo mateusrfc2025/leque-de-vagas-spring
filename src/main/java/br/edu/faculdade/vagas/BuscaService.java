@@ -13,16 +13,12 @@ public class BuscaService {
         this.repositorio = repositorio;
     }
 
-   public List<Vaga> buscar(String area, String senioridade,
-                             Boolean aceitaIniciante) {
-
-        return repositorio.todas().stream() // trocar para return repositorio.findAll().stream()   // era: repositorio.todas().stream()
-                .filter(v -> area == null
-                        || v.area().equalsIgnoreCase(area))
-                .filter(v -> senioridade == null
-                        || v.senioridade().equalsIgnoreCase(senioridade))
-                .filter(v -> aceitaIniciante == null
-                        || v.aceitaIniciante() == aceitaIniciante)
+    public List<VagaResposta> buscar(String area, String senioridade, Boolean aceitaIniciante) {
+        return repositorio.findAll().stream()
+                .filter(v -> area == null || v.getArea().equalsIgnoreCase(area))
+                .filter(v -> senioridade == null || v.getSenioridade().equalsIgnoreCase(senioridade))
+                .filter(v -> aceitaIniciante == null || v.isAceitaIniciante() == aceitaIniciante)
+                .map(VagaResposta::de)
                 .toList();
     }
 }

@@ -6,8 +6,11 @@ GET http://localhost:8080/vagas
 ### buscar uma vaga existente
 GET http://localhost:8080/vagas/1
 
-### buscar uma vaga que NÃO existe — deve retornar 404
-GET http://localhost:8080/vagas/nao-existe
+### id que não existe — 404
+GET http://localhost:8080/vagas/999
+
+### id que nem é número — 400 em Problem Details
+GET http://localhost:8080/vagas/abc
 
 ### criar uma vaga — deve retornar 201
 POST http://localhost:8080/vagas
@@ -43,38 +46,35 @@ DELETE http://localhost:8080/vagas/12
 
 ### EMPRESAS
 
-### listar todas as empresas
+### listar — 200 (5 empresas)
 GET http://localhost:8080/empresas
 
-### buscar uma empresa existente
+### uma que existe — 200, com "id"
 GET http://localhost:8080/empresas/aurora-tech
 
-### buscar uma empresa que NÃO existe — deve retornar 404
+### uma que NÃO existe — 404
 GET http://localhost:8080/empresas/nao-existe
 
-### criar uma empresa — deve retornar 201
+### criar — 201, Location: /empresas/jangada-dev
 POST http://localhost:8080/empresas
 Content-Type: application/json
 
-{
-  "nome": "Farol Tech",
-  "slug": "farol-tech",
-  "site": "https://farol.tech",
-  "descricao": "Software para portos e terminais."
-}
+{ "nome": "Jangada Dev", "slug": "jangada-dev", "site": "https://jangada.dev", "descricao": "Consultoria em software." }
 
-### apagar uma empresa — deve retornar 204
-DELETE http://localhost:8080/empresas/farol-tech
-
-### Aula 05 · Frente 2 · deve retornar 200 com "id": 1
-GET http://localhost:8080/empresas/aurora-tech
-
-### Aula 05 · Frente 2 · slug repetido, deve retornar 409
+### slug repetido — 409
 POST http://localhost:8080/empresas
 Content-Type: application/json
 
-{ "nome": "Aurora Tech", "slug": "aurora-tech", "site": "https://aurora.tech", "descricao": "repetida" }
+{ "nome": "Jangada Dev", "slug": "jangada-dev", "site": "https://jangada.dev", "descricao": "repetida" }
 
+### slug com maiúscula — 400
+POST http://localhost:8080/empresas
+Content-Type: application/json
+
+{ "nome": "Jangada Dev", "slug": "Jangada-Dev", "site": "https://jangada.dev", "descricao": "x" }
+
+### apagar — 204 (na segunda vez, 404)
+DELETE http://localhost:8080/empresas/jangada-dev
 
 ### PESSOAS
 
@@ -143,6 +143,12 @@ GET http://localhost:8080/vagas/busca
 
 ### buscar sem resultado — deve retornar 200 com []
 GET http://localhost:8080/vagas/busca?area=Computação%20Quântica
+
+### Front-end e aceita iniciante — 200
+GET http://localhost:8080/vagas/busca?area=Front-end&aceitaIniciante=true
+
+### área sem vagas — 200 com []
+GET http://localhost:8080/vagas/busca?area=Design
 
 
 ### ESTATÍSTICAS
