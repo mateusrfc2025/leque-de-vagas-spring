@@ -3,4 +3,5 @@ INSERT INTO empresa (nome, slug, site, descricao) VALUES
                                                       ('Nuvem Rosa', 'nuvem-rosa', 'nuvemrosa.com.br', 'Consultoria de dados para o varejo do Nordeste.'),
                                                       ('Mareh Digital', 'mareh-digital', 'mareh.digital', 'Agência de produtos digitais em Olinda.'),
                                                       ('Coral Labs', 'coral-labs', 'corallabs.io', 'Plataforma de educação corporativa.'),
-                                                      ('Tucano Systems', 'tucano-systems', 'tucano.sys.br', 'Integrações e APIs para logística.');
+                                                      ('Tucano Systems', 'tucano-systems', 'tucano.sys.br', 'Integrações e APIs para logística.')
+    ON CONFLICT (slug) DO NOTHING;

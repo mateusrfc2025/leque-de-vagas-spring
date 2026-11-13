@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class VagaService {
@@ -15,47 +14,38 @@ public class VagaService {
         this.repositorio = repositorio;
     }
 
-    public List<Vaga> listar() {
-        return repositorio.todas();
+    public List<VagaResposta> listar() {
+        return repositorio.findAll().stream().map(this::paraResposta).toList();
     }
 
-    public Optional<Vaga> buscarPorId(String id) {
-        return repositorio.porId(id);
+    public Optional<VagaResposta> buscarPorId(Long id) {
+        return repositorio.findById(id).map(this::paraResposta);
     }
 
-    public Vaga criar(Vaga nova) {
-        Vaga comId = new Vaga(
-                UUID.randomUUID().toString(),
-                nova.titulo(),
-                nova.descricao(),
-                nova.area(),
-                nova.senioridade(),
-                nova.local(),
-                nova.aceitaIniciante(),
-                nova.empresaSlug()
-        );
-
-        repositorio.salvar(comId);
-
-        return comId;
+    public VagaResposta criar(VagaEntrada e) {
+        Vaga nova = new Vaga(e.titulo(), e.descricao(), e.area(), e.senioridade(),
+                e.local(), e.aceitaIniciante(), e.empresaSlug());
+        return paraResposta(repositorio.save(nova));
     }
 
-    public Optional<Vaga> trocar(String id, Vaga nova) {
-        Vaga comId = new Vaga(
-                id,
-                nova.titulo(),
-                nova.descricao(),
-                nova.area(),
-                nova.senioridade(),
-                nova.local(),
-                nova.aceitaIniciante(),
-                nova.empresaSlug()
-        );
-
-        return repositorio.trocar(id, comId);
+    public Optional<VagaResposta> trocar(Long id, VagaEntrada e) {
+        return repositorio.findById(id).map(vaga -> {
+            vaga.trocarDados(e.titulo(), e.descricao(), e.area(), e.senioridade(),
+                    e.local(), e.aceitaIniciante(), e.empresaSlug());
+            return paraResposta(repositorio.save(vaga));
+        });
     }
 
-    public boolean apagar(String id) {
-        return repositorio.remover(id);
+    public boolean apagar(Long id) {
+        if (!repositorio.existsById(id)) {
+            return false;
+        }
+        repositorio.deleteById(id);
+        return true;
+    }
+
+    private VagaResposta paraResposta(Vaga v) {
+        return new VagaResposta(v.getId(), v.getTitulo(), v.getDescricao(), v.getArea(),
+                v.getSenioridade(), v.getLocal(), v.isAceitaIniciante(), v.getEmpresaSlug());
     }
 }

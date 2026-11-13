@@ -1,7 +1,7 @@
 package br.edu.faculdade.vagas;
 
 public record PessoaResposta(
-        String id,
+        Long id,
         String nome,
         String email,
         String area,

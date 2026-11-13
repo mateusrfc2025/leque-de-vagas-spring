@@ -4,4 +4,5 @@ INSERT INTO pessoa (nome, email, area, senioridade) VALUES
                                                         ('Carla Menezes', 'carla@exemplo.com', 'Dados', 'Estágio'),
                                                         ('Diego Tavares', 'diego@exemplo.com', 'Front-end', 'Pleno'),
                                                         ('Elisa Prado', 'elisa@exemplo.com', 'Mobile', 'Júnior'),
-                                                        ('Fábio Vasconcelos', 'fabio@exemplo.com', 'Back-end', 'Pleno');
+                                                        ('Fábio Vasconcelos', 'fabio@exemplo.com', 'Back-end', 'Pleno')
+    ON CONFLICT (email) DO NOTHING;

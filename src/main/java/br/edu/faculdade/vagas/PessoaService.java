@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class PessoaService {
@@ -16,13 +15,11 @@ public class PessoaService {
     }
 
     public List<PessoaResposta> listar() {
-        return repositorio.todas().stream()
-                .map(this::paraResposta)
-                .toList();
+        return repositorio.findAll().stream().map(this::paraResposta).toList();
     }
 
-    public Optional<PessoaResposta> buscarPorId(String id) {
-        return repositorio.porId(id).map(this::paraResposta);
+    public Optional<PessoaResposta> buscarPorId(Long id) {
+        return repositorio.findById(id).map(this::paraResposta);
     }
 
     public PessoaResposta criar(PessoaEntrada entrada) {
@@ -31,21 +28,21 @@ public class PessoaService {
         return paraResposta(repositorio.save(nova));
     }
 
-    public Optional<PessoaResposta> trocar(String id, PessoaEntrada nova) {
-        return repositorio.trocar(id, paraPessoa(id, nova))
-                .map(this::paraResposta);
+    public Optional<PessoaResposta> trocar(Long id, PessoaEntrada nova) {
+        return repositorio.findById(id).map(p -> {
+            p.trocarDados(nova.nome(), nova.email(), nova.area(), nova.senioridade());
+            return paraResposta(repositorio.save(p));
+        });
     }
 
-    public boolean apagar(String id) {
-        return repositorio.remover(id);
+    public boolean apagar(Long id) {
+        if (!repositorio.existsById(id)) {
+            return false;
+        }
+        repositorio.deleteById(id);
+        return true;
     }
 
-    // entrada → modelo (o id vem de fora: gerado no POST, da URL no PUT)
-    private Pessoa paraPessoa(String id, PessoaEntrada e) {
-        return new Pessoa(id, e.nome(), e.email(), e.area(), e.senioridade());
-    }
-
-    // modelo → resposta
     private PessoaResposta paraResposta(Pessoa p) {
         return new PessoaResposta(p.id(), p.nome(), p.email(), p.area(), p.senioridade());
     }

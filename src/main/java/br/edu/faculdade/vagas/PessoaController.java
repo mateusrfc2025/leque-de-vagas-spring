@@ -30,7 +30,7 @@ public class PessoaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PessoaResposta> porId(@PathVariable String id) {
+    public ResponseEntity<PessoaResposta> porId(@PathVariable Long id) {
         return servico.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -44,7 +44,7 @@ public class PessoaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PessoaResposta> trocar(@PathVariable String id,
+    public ResponseEntity<PessoaResposta> trocar(@PathVariable Long id,
                                                  @Valid @RequestBody PessoaEntrada nova) {
         return servico.trocar(id, nova)
                 .map(ResponseEntity::ok)
@@ -52,7 +52,7 @@ public class PessoaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> apagar(@PathVariable String id) {
+    public ResponseEntity<Void> apagar(@PathVariable Long id) {
         return servico.apagar(id)
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.notFound().build();

@@ -14,24 +14,21 @@ public class EmpresaService {
         this.repositorio = repositorio;
     }
 
-    public List<Empresa> listar() {
-        return repositorio.findAll();
+    public List<EmpresaResposta> listar() {
+        return repositorio.findAll().stream().map(this::paraResposta).toList();
     }
 
-    public Optional<Empresa> buscarPorSlug(String slug) {
-        return repositorio.findBySlug(slug);
+    public Optional<EmpresaResposta> buscarPorSlug(String slug) {
+        return repositorio.findBySlug(slug).map(this::paraResposta);
     }
 
     public EmpresaResposta criar(EmpresaEntrada nova) {
         if (repositorio.findBySlug(nova.slug()).isPresent()) {
-            throw new SlugJaExisteException(nova.slug());
+            throw new RecursoJaExiste("já existe uma empresa com o slug: " + nova.slug());
         }
-
         Empresa salva = repositorio.save(
                 new Empresa(nova.nome(), nova.slug(), nova.site(), nova.descricao()));
-
-        return new EmpresaResposta(salva.getId(), salva.getNome(), salva.getSlug(),
-                salva.getSite(), salva.getDescricao());
+        return paraResposta(salva);
     }
 
     public boolean apagar(String slug) {
@@ -41,5 +38,9 @@ public class EmpresaService {
                     return true;
                 })
                 .orElse(false);
+    }
+
+    private EmpresaResposta paraResposta(Empresa e) {
+        return new EmpresaResposta(e.getId(), e.getNome(), e.getSlug(), e.getSite(), e.getDescricao());
     }
 }

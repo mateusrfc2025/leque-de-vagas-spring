@@ -2,14 +2,11 @@ package br.edu.faculdade.vagas;
 
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * A entrega da aula 02, intacta. Evoluir a API não pode quebrar o que já
- * existia — conferir isso faz parte de juntar as quatro partes da aula 03.
- */
 @Service
 public class EstatisticasService {
 
@@ -19,20 +16,15 @@ public class EstatisticasService {
         this.vagas = vagas;
     }
 
-    // Map.of aceita no máximo 10 pares; são quatro aqui, então cabe. Se a
-    // equipe quiser mais números, troque por new LinkedHashMap<>() — e de
-    // quebra a ordem das chaves passa a ser a que você escreveu.
     public Map<String, Object> resumo() {
-        List<Vaga> todas = vagas.todas(); // trocar para List<Vaga> todas = vagas.findAll();   // era: vagas.todas()
-        return Map.of(
-            "totalDeVagas", todas.size(),
-            "aceitamIniciante", todas.stream()
-                .filter(Vaga::aceitaIniciante)
-                .count(),
-            "porArea", todas.stream()
-                .collect(Collectors.groupingBy(Vaga::area, Collectors.counting())),
-            "porSenioridade", todas.stream()
-                .collect(Collectors.groupingBy(Vaga::senioridade, Collectors.counting()))
-        );
+        List<Vaga> todas = vagas.findAll();
+        Map<String, Object> resumo = new LinkedHashMap<>();
+        resumo.put("totalDeVagas", todas.size());
+        resumo.put("aceitamIniciante", todas.stream().filter(Vaga::isAceitaIniciante).count());
+        resumo.put("porArea", todas.stream()
+                .collect(Collectors.groupingBy(Vaga::getArea, Collectors.counting())));
+        resumo.put("porSenioridade", todas.stream()
+                .collect(Collectors.groupingBy(Vaga::getSenioridade, Collectors.counting())));
+        return resumo;
     }
 }

@@ -16,7 +16,7 @@ public class Empresa {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 60)
     private String slug;
 
     private String site;

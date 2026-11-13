@@ -21,7 +21,7 @@ public class BuscaController {
     }
 
     @GetMapping("/busca")
-    public List<Vaga> buscar(
+    public List<VagaResposta> buscar(
             @RequestParam(required = false)
             @Size(max = 60, message = "a área passa de 60 caracteres")
             String area,

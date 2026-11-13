@@ -12,6 +12,8 @@ import java.util.Map;
 
 import org.springframework.dao.DataIntegrityViolationException;
 
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
 @RestControllerAdvice
 public class TratadorDeErros {
 
@@ -41,14 +43,10 @@ public class TratadorDeErros {
                 "Um ou mais parâmetros estão inválidos.", erros);
     }
 
-    // Slug de empresa repetido → 409
-    @ExceptionHandler(SlugJaExisteException.class)
-    public ProblemDetail slugRepetido(SlugJaExisteException e) {
-        Map<String, String> erros = new LinkedHashMap<>();
-        erros.put("slug", e.getMessage());
-
-        return problema(HttpStatus.CONFLICT, "Slug já existe",
-                e.getMessage(), erros);
+    // Recurso repetido (ex.: slug de empresa) → 409
+    @ExceptionHandler(RecursoJaExiste.class)
+    public ProblemDetail jaExiste(RecursoJaExiste e) {
+        return problema(HttpStatus.CONFLICT, "Já existe", e.getMessage(), Map.of());
     }
 
     private ProblemDetail problema(HttpStatus status, String titulo,
@@ -64,6 +62,15 @@ public class TratadorDeErros {
         ProblemDetail p = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT,
                 "O dado conflita com um que já está gravado.");
         p.setTitle("Conflito");
+        return p;
+    }
+
+    // O id da URL é Long, e "abc" não vira número: o Spring recusa antes do controller.
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ProblemDetail tipoErrado(MethodArgumentTypeMismatchException e) {
+        ProblemDetail p = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,
+                "O valor '" + e.getValue() + "' não serve para o parâmetro '" + e.getName() + "'.");
+        p.setTitle("Parâmetro inválido");
         return p;
     }
 }
