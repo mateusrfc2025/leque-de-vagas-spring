@@ -66,6 +66,7 @@ com 100 mil o banco mandaria tudo pela rede para devolver três. A correção
 | Mateus Ramalho | 3 | Pessoa | `Pessoa`, `PessoaRepository`, `PessoaService`, `PessoaController` |
 | Lucas Ramalho  | 4 | Busca e números | `BuscaService`, `BuscaController`, `EstatisticasService`, `EstatisticasController` |
 
+
 ## Estrutura
 
 ```
