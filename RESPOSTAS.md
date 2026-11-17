@@ -66,7 +66,7 @@ POST normalmente não é idempotente, porque cada chamada pode criar um novo rec
 
 ### ddl-auto
 
-Usamos `spring.jpa.hibernate.ddl-auto=create-drop`. O banco é H2 em memória e some quando a aplicação para, então faz sentido o Hibernate criar as tabelas na subida e apagá-las na descida. Em produção isso nunca seria usado, porque apagaria os dados.
+Usamos `spring.jpa.hibernate.ddl-auto=update`. O banco é um PostgreSQL de verdade no Supabase, então o Hibernate só cria as tabelas e colunas que faltam e nunca apaga dados: o que foi gravado sobrevive ao reinício. `create-drop` apagaria tudo a cada parada da aplicação.
 
 ### O que aconteceu com o e-mail repetido
 
@@ -84,32 +84,3 @@ O jeito da frente 3. Com a checagem prévia, os dois pedidos podem passar pelo "
 
 **Por que o id pulou um número?**
 O INSERT recusado já tinha pedido um id ao banco antes de falhar, e id pedido não volta. Por exemplo: a pessoa 7 foi criada, o INSERT repetido consumiu o 8 e a próxima pessoa ficou com o 9. Id identifica, não conta.
-
-## Frente 4 · medição de SQL (aula 05)
-
-| Rota | Comandos SQL | Tem `where`? |
-|---|---|---|
-| GET /vagas/busca?area=Dados | 1 (`select` de todas as vagas) | Não |
-| GET /estatisticas | 1 (`select` de todas as vagas) | Não |
-| GET /vagas/1 | 1 (`select` por id) | Sim, `where id=?` |
-| DELETE /vagas/12 | 3 (`select` do `existsById`, `select` do `deleteById` e o `delete`) | Sim, todos pelo id |
-
-`/vagas/busca?area=Dados` traz 12 linhas do banco para devolver 3 porque o banco devolve todas as vagas (`findAll` não tem `where`). Quem filtra por área é o Java, com `stream`, depois que as 12 já foram lidas.
-
-Em `/estatisticas`, quem conta também é o Java, não o banco. No `DELETE`, o `deleteById` primeiro carrega a vaga com um `select` e só depois apaga.
-
-## O banco
-
-1. Crie um projeto em supabase.com/dashboard (região São Paulo) e guarde a senha do banco.
-2. No projeto, clique em **Connect** → **Session pooler** e anote host, port, database e user.
-3. Copie o `.env.example` para `.env` (na raiz, ao lado do `pom.xml`) e preencha
-   com os seus dados. O `.env` não vai para o GitHub.
-4. Usamos `ddl-auto=update`: ele cria as tabelas e colunas que faltam e nunca apaga dados,
-   então o que foi gravado sobrevive ao reinício.
-
-### Medição do SQL da busca (aula 05)
-
-| Chamada                   | Selects | Com where? | Vieram do banco | Voltaram  |
-| ------------------------- | ------- | ---------- | --------------- | --------- |
-| `/vagas/busca?area=Dados` | 1       | não        | 12              | 3         |
-| `/estatisticas`           | 1       | não        | 12              | 4 números |

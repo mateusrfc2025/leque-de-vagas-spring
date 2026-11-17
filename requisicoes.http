@@ -1,9 +1,11 @@
+### =========================================================
 ### VAGAS
+### =========================================================
 
-### listar todas as vagas
+### listar — 200, 12 vagas
 GET http://localhost:8080/vagas
 
-### buscar uma vaga existente
+### uma que existe — 200
 GET http://localhost:8080/vagas/1
 
 ### id que não existe — 404
@@ -12,7 +14,7 @@ GET http://localhost:8080/vagas/999
 ### id que nem é número — 400 em Problem Details
 GET http://localhost:8080/vagas/abc
 
-### criar uma vaga — deve retornar 201
+### criar — 201, Location: /vagas/13
 POST http://localhost:8080/vagas
 Content-Type: application/json
 
@@ -26,7 +28,20 @@ Content-Type: application/json
   "empresaSlug": "tucano-systems"
 }
 
-### trocar uma vaga — deve retornar 200
+### criar sem titulo — 400, listando os campos inválidos
+POST http://localhost:8080/vagas
+Content-Type: application/json
+
+{
+  "descricao": "Vaga sem título",
+  "area": "Back-end",
+  "senioridade": "Pleno",
+  "local": "Remoto",
+  "aceitaIniciante": false,
+  "empresaSlug": "tucano-systems"
+}
+
+### trocar — 200
 PUT http://localhost:8080/vagas/1
 Content-Type: application/json
 
@@ -40,11 +55,16 @@ Content-Type: application/json
   "empresaSlug": "aurora-tech"
 }
 
-### apagar uma vaga — deve retornar 204
+### apagar — 204
+DELETE http://localhost:8080/vagas/12
+
+### apagar de novo — 404
 DELETE http://localhost:8080/vagas/12
 
 
+### =========================================================
 ### EMPRESAS
+### =========================================================
 
 ### listar — 200 (5 empresas)
 GET http://localhost:8080/empresas
@@ -73,76 +93,84 @@ Content-Type: application/json
 
 { "nome": "Jangada Dev", "slug": "Jangada-Dev", "site": "https://jangada.dev", "descricao": "x" }
 
-### apagar — 204 (na segunda vez, 404)
+### apagar — 204
 DELETE http://localhost:8080/empresas/jangada-dev
 
-### PESSOAS
+### apagar de novo — 404
+DELETE http://localhost:8080/empresas/jangada-dev
 
-### listar todas as pessoas
+
+### =========================================================
+### PESSOAS
+### =========================================================
+
+### listar — 200, 6 pessoas
 GET http://localhost:8080/pessoas
 
-### buscar uma pessoa existente
+### uma que existe — 200
 GET http://localhost:8080/pessoas/1
 
-### buscar uma pessoa que NÃO existe — deve retornar 404
-GET http://localhost:8080/pessoas/nao-existe
+### id que não existe — 404
+GET http://localhost:8080/pessoas/999
 
-### criar uma pessoa — deve retornar 201
+### id que nem é número — 400
+GET http://localhost:8080/pessoas/abc
+
+### criar — 201, Location: /pessoas/7
 POST http://localhost:8080/pessoas
 Content-Type: application/json
 
-{
-  "nome": "Helena Costa",
-  "email": "helena@exemplo.com",
-  "area": "Back-end",
-  "senioridade": "Júnior"
-}
+{ "nome": "Helena Costa", "email": "helena@exemplo.com", "area": "Back-end", "senioridade": "Júnior" }
 
-### trocar uma pessoa — deve retornar 200
+### e-mail repetido — 409
+POST http://localhost:8080/pessoas
+Content-Type: application/json
+
+{ "nome": "Ana Outra", "email": "ana@exemplo.com", "area": "Dados", "senioridade": "Pleno" }
+
+### trocar — 200
 PUT http://localhost:8080/pessoas/1
 Content-Type: application/json
 
-{
-  "nome": "Ana Nogueira",
-  "email": "ana@exemplo.com",
-  "area": "Dados",
-  "senioridade": "Pleno"
-}
+{ "nome": "Ana Nogueira", "email": "ana@exemplo.com", "area": "Dados", "senioridade": "Pleno" }
 
-### apagar uma pessoa — deve retornar 204
+### trocar uma que não existe — 404
+PUT http://localhost:8080/pessoas/999
+Content-Type: application/json
+
+{ "nome": "Ninguém", "email": "ninguem@exemplo.com", "area": "Dados", "senioridade": "Pleno" }
+
+### apagar — 204
 DELETE http://localhost:8080/pessoas/6
 
-### frente 3 · criar — 201, Location: /pessoas/7
+### apagar de novo — 404
+DELETE http://localhost:8080/pessoas/6
+
+### corpo vazio — 400
 POST http://localhost:8080/pessoas
 Content-Type: application/json
 
-{ "nome": "Helena Costa", "email": "helena@exemplo.com",
-  "area": "Back-end", "senioridade": "Júnior" }
+{}
 
-### frente 3 · e-mail repetido — 409
+### email "maria@" — 400
 POST http://localhost:8080/pessoas
 Content-Type: application/json
 
-{ "nome": "Ana Outra", "email": "ana@exemplo.com",
-  "area": "Dados", "senioridade": "Pleno" }
+{ "nome": "Maria", "email": "maria@", "area": "Dados", "senioridade": "Júnior" }
+
+### PUT com corpo vazio — 400
+PUT http://localhost:8080/pessoas/1
+Content-Type: application/json
+
+{}
 
 
-### BUSCA DE VAGAS
+### =========================================================
+### BUSCA (frente 4 — olhe o log e conte os SELECTs)
+### =========================================================
 
-### buscar por área — deve retornar 200
+### Dados — 200, 3 vagas
 GET http://localhost:8080/vagas/busca?area=Dados
-
-### buscar por área e senioridade — deve retornar 200
-GET http://localhost:8080/vagas/busca?area=Dados&senioridade=Júnior
-
-### buscar por aceitaIniciante — deve retornar 200
-GET http://localhost:8080/vagas/busca?aceitaIniciante=true
-
-### buscar sem filtros — deve retornar 200
-GET http://localhost:8080/vagas/busca
-
-### buscar sem resultado — deve retornar 200 com []
-GET http://localhost:8080/vagas/busca?area=Computação%20Quântica
 
 ### Front-end e aceita iniciante — 200
 GET http://localhost:8080/vagas/busca?area=Front-end&aceitaIniciante=true
@@ -150,47 +178,13 @@ GET http://localhost:8080/vagas/busca?area=Front-end&aceitaIniciante=true
 ### área sem vagas — 200 com []
 GET http://localhost:8080/vagas/busca?area=Design
 
+### sem filtros — 200, todas
+GET http://localhost:8080/vagas/busca
 
+
+### =========================================================
 ### ESTATÍSTICAS
+### =========================================================
 
-### consultar estatísticas
+### resumo — 200, contagens somando 12
 GET http://localhost:8080/estatisticas
-
-
-### PESSOA (chamadas inválidas)
-
-### PESSOA · corpo vazio — deve retornar 400
-POST http://localhost:8080/pessoas
-Content-Type: application/json
-
-{}
-
-### PESSOA · email "maria@" — deve retornar 400
-POST http://localhost:8080/pessoas
-Content-Type: application/json
-
-{ "nome": "Maria", "email": "maria@", "area": "Dados", "senioridade": "Júnior" }
-
-### PESSOA · email "@exemplo.com" — anote o resultado
-POST http://localhost:8080/pessoas
-Content-Type: application/json
-
-{ "nome": "Maria", "email": "@exemplo.com", "area": "Dados", "senioridade": "Júnior" }
-
-### PESSOA · email "maria exemplo.com" — anote o resultado
-POST http://localhost:8080/pessoas
-Content-Type: application/json
-
-{ "nome": "Maria", "email": "maria exemplo.com", "area": "Dados", "senioridade": "Júnior" }
-
-### PESSOA · email "maria@exemplo" (sem ponto) — anote o resultado
-POST http://localhost:8080/pessoas
-Content-Type: application/json
-
-{ "nome": "Maria", "email": "maria@exemplo", "area": "Dados", "senioridade": "Júnior" }
-
-### PESSOA · PUT com corpo vazio — deve retornar 400
-PUT http://localhost:8080/pessoas/1
-Content-Type: application/json
-
-{}

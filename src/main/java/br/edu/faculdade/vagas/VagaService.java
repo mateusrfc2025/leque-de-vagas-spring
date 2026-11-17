@@ -15,24 +15,24 @@ public class VagaService {
     }
 
     public List<VagaResposta> listar() {
-        return repositorio.findAll().stream().map(this::paraResposta).toList();
+        return repositorio.findAll().stream().map(VagaResposta::de).toList();
     }
 
     public Optional<VagaResposta> buscarPorId(Long id) {
-        return repositorio.findById(id).map(this::paraResposta);
+        return repositorio.findById(id).map(VagaResposta::de);
     }
 
     public VagaResposta criar(VagaEntrada e) {
         Vaga nova = new Vaga(e.titulo(), e.descricao(), e.area(), e.senioridade(),
                 e.local(), e.aceitaIniciante(), e.empresaSlug());
-        return paraResposta(repositorio.save(nova));
+        return VagaResposta.de(repositorio.save(nova));
     }
 
     public Optional<VagaResposta> trocar(Long id, VagaEntrada e) {
         return repositorio.findById(id).map(vaga -> {
             vaga.trocarDados(e.titulo(), e.descricao(), e.area(), e.senioridade(),
                     e.local(), e.aceitaIniciante(), e.empresaSlug());
-            return paraResposta(repositorio.save(vaga));
+            return VagaResposta.de(repositorio.save(vaga));
         });
     }
 
@@ -42,10 +42,5 @@ public class VagaService {
         }
         repositorio.deleteById(id);
         return true;
-    }
-
-    private VagaResposta paraResposta(Vaga v) {
-        return new VagaResposta(v.getId(), v.getTitulo(), v.getDescricao(), v.getArea(),
-                v.getSenioridade(), v.getLocal(), v.isAceitaIniciante(), v.getEmpresaSlug());
     }
 }

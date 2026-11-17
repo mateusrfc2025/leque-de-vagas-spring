@@ -26,18 +26,20 @@ public class Vaga {
     private String senioridade;
 
     private String local;
+
     private boolean aceitaIniciante;
 
     @Column(nullable = false)
     private String empresaSlug;
 
-    protected Vaga() { }
+    protected Vaga() { } // a JPA exige
 
     public Vaga(String titulo, String descricao, String area, String senioridade,
                 String local, boolean aceitaIniciante, String empresaSlug) {
         trocarDados(titulo, descricao, area, senioridade, local, aceitaIniciante, empresaSlug);
     }
 
+    // usado pelo PUT: troca tudo, menos o id
     public void trocarDados(String titulo, String descricao, String area, String senioridade,
                             String local, boolean aceitaIniciante, String empresaSlug) {
         this.titulo = titulo;
@@ -49,12 +51,12 @@ public class Vaga {
         this.empresaSlug = empresaSlug;
     }
 
-    public Long getId() { return id; }
-    public String getTitulo() { return titulo; }
-    public String getDescricao() { return descricao; }
-    public String getArea() { return area; }
-    public String getSenioridade() { return senioridade; }
-    public String getLocal() { return local; }
-    public boolean isAceitaIniciante() { return aceitaIniciante; }
-    public String getEmpresaSlug() { return empresaSlug; }
+    public Long id() { return id; }
+    public String titulo() { return titulo; }
+    public String descricao() { return descricao; }
+    public String area() { return area; }
+    public String senioridade() { return senioridade; }
+    public String local() { return local; }
+    public boolean aceitaIniciante() { return aceitaIniciante; }
+    public String empresaSlug() { return empresaSlug; }
 }

@@ -1,8 +1,8 @@
 package br.edu.faculdade.vagas;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public record VagaEntrada(
 
@@ -19,12 +19,11 @@ public record VagaEntrada(
         @NotBlank(message = "O slug da empresa é obrigatório")
         String empresaSlug,
 
+        @Size(max = 1000, message = "A descrição deve ter no máximo 1000 caracteres")
         String descricao,
 
         String local,
 
         @NotNull(message = "aceitaIniciante é obrigatório (true ou false)")
         Boolean aceitaIniciante
-
-) {
-}
+) { }

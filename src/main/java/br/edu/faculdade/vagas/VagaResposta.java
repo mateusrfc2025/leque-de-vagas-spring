@@ -3,15 +3,15 @@ package br.edu.faculdade.vagas;
 public record VagaResposta(
         Long id,
         String titulo,
-        String descricao,
         String area,
         String senioridade,
         String local,
         boolean aceitaIniciante,
         String empresaSlug
 ) {
+    // a listagem não precisa do texto longo, por isso a descricao fica de fora
     public static VagaResposta de(Vaga v) {
-        return new VagaResposta(v.getId(), v.getTitulo(), v.getDescricao(), v.getArea(),
-                v.getSenioridade(), v.getLocal(), v.isAceitaIniciante(), v.getEmpresaSlug());
+        return new VagaResposta(v.id(), v.titulo(), v.area(), v.senioridade(),
+                v.local(), v.aceitaIniciante(), v.empresaSlug());
     }
 }
