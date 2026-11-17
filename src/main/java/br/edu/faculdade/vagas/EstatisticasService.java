@@ -16,15 +16,16 @@ public class EstatisticasService {
         this.vagas = vagas;
     }
 
+    // aula 05: as contagens ainda são feitas em Java. A contagem no banco vem na aula 08.
     public Map<String, Object> resumo() {
         List<Vaga> todas = vagas.findAll();
         Map<String, Object> resumo = new LinkedHashMap<>();
         resumo.put("totalDeVagas", todas.size());
-        resumo.put("aceitamIniciante", todas.stream().filter(Vaga::isAceitaIniciante).count());
+        resumo.put("aceitamIniciante", todas.stream().filter(Vaga::aceitaIniciante).count());
         resumo.put("porArea", todas.stream()
-                .collect(Collectors.groupingBy(Vaga::getArea, Collectors.counting())));
+                .collect(Collectors.groupingBy(Vaga::area, Collectors.counting())));
         resumo.put("porSenioridade", todas.stream()
-                .collect(Collectors.groupingBy(Vaga::getSenioridade, Collectors.counting())));
+                .collect(Collectors.groupingBy(Vaga::senioridade, Collectors.counting())));
         return resumo;
     }
 }
